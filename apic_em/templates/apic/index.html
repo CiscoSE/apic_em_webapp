@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+{% if output %}
+    {% for line in output %}
+        <br />{{ line }}
+    {% endfor %}
+{% else %}
+    <p>No output is available.</p>
+{% endif %}
+</body>
+</html>

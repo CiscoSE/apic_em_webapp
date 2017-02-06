@@ -43,12 +43,14 @@ def get_device_id(token, url):
 def get_config(token, url, id):
 
     #define API call
-    api_call = 'network-device/' + id + '/config'
-
+    api_call = '/network-device/' + id + '/config'
+    print (api_call)
     #headers
     headers = {'X-AUTH-TOKEN': token}
+    print (headers)
 
     url += api_call
+    print (url)
 
     response = requests.get(url, headers=headers, verify=False).json()
 

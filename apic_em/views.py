@@ -1,4 +1,6 @@
 from django.http import HttpResponse
+from django.shortcuts import render
+from django.template import loader
 import requests
 import json
 from .get_stuff import get_token, get_config, get_device_id
@@ -32,15 +34,22 @@ def practice(request):
 
 def index(request):
 
+    template = loader.get_template('apic/index.html')
     auth_token = get_token(apic_em_ip)
-    print (type(auth_token))
-    #auth_token = json.loads(HttpResponse.getvalue(auth_token).decode('utf-8'))
-    #auth_token = auth_token['response']['serviceTicket']
-    #device_id = get_device_id(auth_token, apic_em_ip)
+    #print (type(auth_token))
+    auth_token = json.loads(HttpResponse.getvalue(auth_token).decode('utf-8'))
+    auth_token = auth_token['response']['serviceTicket']
+    #print (auth_token)
+    device_id = get_device_id(auth_token, apic_em_ip)
     #print (type(device_id))
     #device_id = json.loads(HttpResponse.getvalue(device_id).decode('utf-8'))
-    #config = get_config(auth_token, apic_em_ip, device_id)
+    #print (device_id)
+    config = get_config(auth_token, apic_em_ip, device_id)
+    output = config['response'].split('\n')
+    context = {
+        'output': output,
+    }
     #print (type(config))
     #config = json.loads(HttpResponse.getvalue(config).decode('utf-8'))
 
-    return HttpResponse('Hello, world.')
+    return HttpResponse(template.render(context, request))

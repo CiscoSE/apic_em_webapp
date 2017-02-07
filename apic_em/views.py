@@ -1,6 +1,7 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.template import loader
+from rest_framework.renderers import JSONRenderer
 import requests
 import json
 from .get_stuff import get_token, get_config, get_device_id
@@ -50,6 +51,30 @@ def index(request):
         'output': output,
     }
     #print (type(config))
+    print(config)
     #config = json.loads(HttpResponse.getvalue(config).decode('utf-8'))
 
     return HttpResponse(template.render(context, request))
+
+def apic_api(request):
+
+    #template = loader.get_template('apic/index.html')
+    auth_token = get_token(apic_em_ip)
+    #print (type(auth_token))
+    auth_token = json.loads(HttpResponse.getvalue(auth_token).decode('utf-8'))
+    auth_token = auth_token['response']['serviceTicket']
+    #print (auth_token)
+    device_id = get_device_id(auth_token, apic_em_ip)
+    #print (type(device_id))
+    #device_id = json.loads(HttpResponse.getvalue(device_id).decode('utf-8'))
+    #print (device_id)
+    config = get_config(auth_token, apic_em_ip, device_id)
+    #output = config['response'].split('\n')
+    #context = {
+    #    'output': output,
+    #}
+    print (type(config))
+    #print(config)
+    #config = json.loads(HttpResponse.getvalue(config).decode('utf-8'))
+
+    return JsonResponse(config)

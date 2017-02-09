@@ -5,6 +5,7 @@ from rest_framework.renderers import JSONRenderer
 import requests
 import json
 from .get_stuff import get_token, get_config, get_device_id
+from .bot import webhook_init, webhook
 
 
 #Disable SSL warning
@@ -78,3 +79,11 @@ def apic_api(request):
     #config = json.loads(HttpResponse.getvalue(config).decode('utf-8'))
 
     return JsonResponse(config)
+
+def wh_init(request):
+    response = webhook_init()
+    return HttpResponse(response)
+
+def sparkwebhook(request):
+    wh_request = webhook(request)
+    return

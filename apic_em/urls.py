@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^api/v1/', views.apic_api, name='apic_api'),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^wh_init/', views.wh_init, name='wh_init'),
 ]

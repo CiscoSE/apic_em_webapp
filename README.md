@@ -15,6 +15,8 @@ You will need the following python modules for many of the apps to run.:
 - django-filter (1.0.1)
 - djangorestframework (3.5.3)
 - requests (2.13.0)
+- ciscosparkapi
+- json
 
 Installing
 ----------
@@ -23,13 +25,23 @@ Once you clone the repository, you will notice a "manage.py" in the apic_em_weba
 
 - "python manage.py runserver"
 - browse to "http://127.0.0.1:8000/apic"
-- if all is installed properly, you should see the running configuration of a virtual router in the Cisco APIC-EM sandbox
+    - if all is installed properly, you should see the running configuration of a virtual router in the Cisco APIC-EM sandbox
+- browse to "http://127.0.0.1:8000/apic/api/v1"
+    - you should see a JSON representation of the same configuration
+- Spark configuration
+    - This application presumes it will be accessible from the Internet.  If you will be on a private network or behind a firewall you do not manage, please see the ciscosparkapi examples for code on how to use ngrok.  https://github.com/CiscoDevNet/ciscosparkapi
+    - Create a file called "at.txt" in the apic_em subdirectory.  Paste an authentication token from developer.ciscospark.com for your bot into the at.txt file.
+    - Open the apic_em/bot.py and edit the "web_server" argument with the publicly accessible IP or URL for you server.
+    - Browse to http://127.0.0.1:8000/apic/wh_init to initialize the webhook.
 
 Authors
 -------
 
 Brian Buxton - index and apic_em
-django tutorials - polls
+
+ciscosparkapi examples - Much of the Spark classes and functions I wrote are derivative of these examples
+
+django tutorials - polls directory include work through lesson 4
 
 License
 -------
@@ -40,3 +52,4 @@ Change Log
 ----------
 
 2/7/17 - added /api/v1/ as a demonstration of serialized JSON output of the config.
+2/9/17 - added /wh_init/ adapting ciscosparkapi example code to django

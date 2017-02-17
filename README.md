@@ -15,8 +15,7 @@ You will need the following python modules for many of the apps to run.:
 - django-filter (1.0.1)
 - djangorestframework (3.5.3)
 - requests (2.13.0)
-- ciscosparkapi
-- json
+- ciscosparkapi (0.4.2)
 
 Installing
 ----------
@@ -39,7 +38,7 @@ Authors
 
 Brian Buxton - index and apic_em
 
-ciscosparkapi examples - Much of the Spark classes and functions I wrote are derivative of these examples
+Chris Lunsford - ciscosparkapi examples - Much of the Spark classes and functions I wrote are highly derivative of Chris' examples
 
 django tutorials - polls directory include work through lesson 4
 
@@ -52,4 +51,7 @@ Change Log
 ----------
 
 2/7/17 - added /api/v1/ as a demonstration of serialized JSON output of the config.
+
 2/9/17 - added /wh_init/ adapting ciscosparkapi example code to django
+
+2/10/17 - added /sparkwebhook/ adapting ciscosparkapi example to django.  Also resolved circular import statements in views, get_stuff and bot.

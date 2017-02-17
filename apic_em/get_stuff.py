@@ -1,10 +1,9 @@
 import requests
 import json
+from django.http import HttpResponse
 
-#apic_em_ip = "https://sandboxapic.cisco.com/api/v1"
 
 def get_token(url):
-
     #Define API call
     api_call = "/ticket"
 
@@ -24,7 +23,6 @@ def get_token(url):
     return ticket
 
 def get_device_id(token, url):
-
     #define API call
     api_call = "/network-device"
 
@@ -41,7 +39,6 @@ def get_device_id(token, url):
             return item['id']
 
 def get_config(token, url, id):
-
     #define API call
     api_call = '/network-device/' + id + '/config'
     print (api_call)
@@ -55,3 +52,13 @@ def get_config(token, url, id):
     response = requests.get(url, headers=headers, verify=False).json()
 
     return response
+
+def return_dict_example(apic_em_ip):
+    auth_token = get_token(apic_em_ip)
+    auth_token = json.loads(HttpResponse.getvalue(auth_token).decode('utf-8'))
+    auth_token = auth_token['response']['serviceTicket']
+    device_id = get_device_id(auth_token, apic_em_ip)
+    config = get_config(auth_token, apic_em_ip, device_id)
+    print (type(config))
+
+    return config

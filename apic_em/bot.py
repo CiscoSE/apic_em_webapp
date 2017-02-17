@@ -25,12 +25,11 @@ from builtins import object
 import json
 import requests
 
-from . import views
+from .get_stuff import return_dict_example
 
 from ciscosparkapi import CiscoSparkAPI, Webhook
 
 def webhook_init():
-
     #Webhook attributes
     webhookname="brbuxton_Get_Config"
     resource="messages"
@@ -65,8 +64,11 @@ def webhook_init():
 def get_config():
     """Get a config from apic_em and return it as a json.
     """
-    response = views.apic_api()
+    apic_em_ip = "https://sandboxapic.cisco.com/api/v1"
+
+    response = return_dict_example(apic_em_ip)
     response_dict = json.loads(response.text)
+
     return response_dict['response']
 
 def findwebhookidbyname(api, webhookname):
@@ -74,12 +76,13 @@ def findwebhookidbyname(api, webhookname):
     for wh in webhooks:
         if wh.name == webhookname:
             return wh.id
+
     return "not found"
 
 class webhook(object):
     def POST(self):
         """Respond to inbound webhook JSON HTTP POSTs from Cisco Spark."""
-        json_data = json.loads(HttpResponse.getvalue(object).decode('utf-8'))                                # Get the POST data sent from Spark
+        json_data = json.loads(HttpResponse.getvalue(object).decode('utf-8'))  # Get the POST data sent from Spark
         print("\nWEBHOOK POST RECEIVED:")
         print(json_data, "\n")
 

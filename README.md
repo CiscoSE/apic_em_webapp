@@ -54,4 +54,8 @@ Change Log
 
 2/9/17 - added /wh_init/ adapting ciscosparkapi example code to django
 
-2/10/17 - added /sparkwebhook/ adapting ciscosparkapi example to django.  Also resolved circular import statements in views, get_stuff and bot.
+2/17/17 - added /sparkwebhook/ adapting ciscosparkapi example to django.  Also resolved circular import statements in views, get_stuff and bot.
+
+2/18/17 - finished /sparkwebhook/.  modified settings.py and bot.py to allow testing from AWS host.
+
+2/26/17 - /sparkwebhook/ successfully running as a daemon on aws.  customizations made directly to views and get_stuff.  Still need to abstract these settings into a config file.

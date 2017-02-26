@@ -19,7 +19,6 @@ def get_token(url):
     url += api_call
 
     ticket = requests.post(url, data=json.dumps(payload), headers=headers, verify=False)
-
     return ticket
 
 def get_device_id(token, url):
@@ -35,22 +34,18 @@ def get_device_id(token, url):
 
     #iterate through response looking for the ACCESS role.
     for item in response['response']:
-        if item['role'] == 'ACCESS':
+        if item['role'] == 'UNKNOWN':
             return item['id']
 
 def get_config(token, url, id):
     #define API call
     api_call = '/network-device/' + id + '/config'
-    print (api_call)
     #headers
     headers = {'X-AUTH-TOKEN': token}
-    print (headers)
 
     url += api_call
-    print (url)
 
     response = requests.get(url, headers=headers, verify=False).json()
-
     return response
 
 def return_dict_example(apic_em_ip):
@@ -59,6 +54,5 @@ def return_dict_example(apic_em_ip):
     auth_token = auth_token['response']['serviceTicket']
     device_id = get_device_id(auth_token, apic_em_ip)
     config = get_config(auth_token, apic_em_ip, device_id)
-    print (type(config))
 
     return config

@@ -1,6 +1,7 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.template import loader
+from django.views.decorators.csrf import csrf_exempt
 import requests
 import json
 from .get_stuff import get_token, get_config, get_device_id, return_dict_example
@@ -39,7 +40,6 @@ def index(request):
     context = {
         'output': output,
     }
-    #config = json.loads(HttpResponse.getvalue(config).decode('utf-8'))
 
     return HttpResponse(template.render(context, request))
 
@@ -52,6 +52,7 @@ def wh_init(request):
     response = webhook_init()
     return HttpResponse(response)
 
+@csrf_exempt
 def sparkwebhook(request):
     wh_request = webhook(request)
-    return
+    return HttpResponse('OK')

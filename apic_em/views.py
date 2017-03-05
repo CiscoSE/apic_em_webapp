@@ -35,10 +35,16 @@ def practice(request):
 
 def index(request):
     template = loader.get_template('apic/index.html')
-    config = return_dict_example(apic_em_ip)
+    auth_token = get_token(apic_em_ip)
+    auth_token = json.loads(HttpResponse.getvalue(auth_token).decode('utf-8'))
+    auth_token = auth_token['response']['serviceTicket']
+    device_id = get_device_id(auth_token, apic_em_ip)
+    config = get_config(auth_token, apic_em_ip, device_id)
     output = config['response'].split('\n')
     context = {
         'output': output,
+        'ticket': auth_token,
+        'deviceID': device_id,
     }
 
     return HttpResponse(template.render(context, request))

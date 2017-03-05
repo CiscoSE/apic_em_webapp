@@ -1,16 +1,164 @@
 <!DOCTYPE html>
+<!--
+	Solid State by HTML5 UP	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)-->
 <html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-{% if output %}
-    {% for line in output %}
-        <br />{{ line }}
-    {% endfor %}
-{% else %}
-    <p>No output is available.</p>
-{% endif %}
-</body>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <title>APIC-EM Get Config</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--[if lte IE 8]><script src="/static/js/ie/html5shiv.js"></script><![endif]-->
+    <link rel="stylesheet" href="/static/css/main.css">
+    <!--[if lte IE 9]><link rel="stylesheet" href="/static/css/ie9.css" /><![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="/static/css/ie8.css" /><![endif]-->
+  </head>
+  <body>
+    <!-- Page Wrapper -->
+    <div id="page-wrapper">
+      <!-- Header -->
+      <header id="header">
+        <h1><a href="/apic/">APIC-EM Get Config Example</a></h1>
+        <nav> <a href="#menu">Menu</a> </nav>
+      </header>
+      <!-- Menu -->
+      <nav id="menu">
+        <div class="inner">
+          <h2>Menu</h2>
+          <ul class="links">
+            <li><a href="/apic/">HTML</a></li>
+            <li><a href="/apic/api/v1/">JSON</a></li>
+          </ul>
+          <a href="#" class="close">Close</a> </div>
+      </nav>
+      <!-- Wrapper -->
+      <section id="wrapper">
+        <header>
+          <div class="inner">
+            <h2>Network Programmabilty with Python</h2>
+            <p>Let's break down a network programmability Python example with
+              Cisco APIC-EM into three steps.</p>
+          </div>
+        </header>
+        <!-- Content -->
+        <div class="wrapper">
+          <div class="inner">
+            <h3 class="major">Step 1 - Get a ticket from the APIC</h3>
+            <p>In order to limit the number of times the APIC-EM appliance hits
+              your backend AAA server, you only need to authenticate once to get
+              a "ticket". &nbsp; This ticket will be included in the header of
+              subsequent API calls. &nbsp; An example of the ticket request is
+              below followed by the actual ticket we received to render this
+              page.</p>
+            <pre><code>
+def get_token(url):
+    #This function receives the "url" which points at the APIC-EM server.
+    #We are using the sandbox available at Cisco. "https://sandboxapic.cisco.com/api/v1"
+    #Next we define API call    
+    api_call = "/ticket"
+
+    # Payload contains authentication information
+    payload = {"username": "devnetuser", "password": "Cisco123!"}
+
+    # Header information
+    headers = {
+        "content-type": "application/json"
+    }
+
+    # Now we combine url and API call
+    url += api_call
+
+    ticket = requests.post(url, data=json.dumps(payload), headers=headers, verify=False)
+    return ticket
+            </code></pre>
+            <p>We received the ticket: {{ ticket }}</p>
+            <h3 class="major">Step 2 - Query a list of devices</h3>
+            <p>We will now take the authentication token and ask the APIC-EM for
+              a list of devices. Exploring the API, we find that there are more
+              than two dozen different items we could use as filters including;
+              location, type, serial number, location and role. Let's use the
+              "role" to look for devices tagged as "Access".</p>
+            <pre><code>
+def get_device_id(token, url):
+    #This function receives the token from the previous function and the URL of the APIC-EM server
+    #Again we define the API call
+    api_call = "/network-device"
+
+    #The header info is where we use the authentication token
+    headers = {"X-AUTH-TOKEN": token}
+
+    url += api_call
+
+    response = requests.get(url, headers=headers, verify=False).json()
+
+    #We iterate through response looking for the ACCESS role.  We could take some action on the entire list of devices with 
+    #this role.  However, to keep things simple, we are only going to return the ID of the first "ACCESS" device we find.
+    for item in response['response']:
+        if item['role'] == 'ACCESS':
+            return item['id']
+          </code></pre>
+            <p>The device we selected has the ID: {{ deviceID }}</p>
+            <h3 class="major">Step 3 - Take an action on the selected device(s)</h3>
+            <p>With a list of devices that meet our criteria, now we can take a
+              series of actions on those devices. We could log into the devices
+              directly using SNMP or NETCONF, but let's leverage the APIC-EM
+              network-device-config to recover the running config.</p>
+            <pre><code>
+def get_config(token, url, id):
+    #We accept the token, APIC-EM URL and the ID of the device we previously selected
+    #We define API call.  The API includes the ID to only request the configuration of the single device.
+    api_call = '/network-device/' + id + '/config'
+
+    #The header info is where we use the authentication token
+    headers = {'X-AUTH-TOKEN': token}
+
+    url += api_call
+
+    response = requests.get(url, headers=headers, verify=False).json()
+    return response
+          </code></pre>
+            {% if output %} {% for line in output %} <br>
+            {{ line }} {% endfor %} {% else %}
+            <p>No output is available.</p>
+            {% endif %} </div>
+        </div>
+      </section>
+      <!-- Footer -->
+      <section id="footer">
+        <div class="inner">
+          <h2 class="major">Next Steps</h2>
+          <p>This has been the absolute basics of network programmability. There
+            are many interesting directions we can go once comfortable with the
+            fundamentals. Users of Cisco Spark can experiment with a bot written
+            on this same site. It listens for a webhook from Cisco Spark for
+            messages sent to it in rooms with the message "get config". It
+            leverages the same code used in this page to deliver a configuration
+            to a Spark room.</p>
+          <p>The exciting stuff really begins when you open up to the idea of
+            infrastructure as software. Network engineers in the next decade
+            won't distinguish themselves as command line ninjas alone. We will
+            need to build networks that are capable of dynamically participating
+            in and responding to the changing circumstances and demands of the
+            applications that depend on it.</p>
+          <p>Expert network engineers won't necessarily need to write full
+            applications. However, the ability to author and maintain custom
+            APIs will be critical elements in the networks of the future.</p>
+        </div>
+      </section>
+      <ul class="contact">
+        <li class="fa-linkedin"><a href="#">www.linkedin.com/in/brianbuxton/</a></li>
+      </ul>
+      <ul class="copyright">
+        <li>© Brian Buxton All rights reserved.</li>
+        <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+      </ul>
+    </div>
+    <!-- Scripts -->
+    <script src="/static/js/skel.min.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/jquery.scrollex.min.js"></script>
+    <script src="/static/js/util.js"></script>
+    <!--[if lte IE 8]><script src="/static/js/ie/respond.min.js"></script><![endif]-->
+    <script src="/static/js/main.js"></script>
+    
+  </body>
 </html>

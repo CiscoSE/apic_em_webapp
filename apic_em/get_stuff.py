@@ -34,7 +34,7 @@ def get_device_id(token, url):
 
     #iterate through response looking for the ACCESS role.
     for item in response['response']:
-        if item['role'] == 'UNKNOWN':
+        if item['role'] == 'ACCESS':
             return item['id']
 
 def get_config(token, url, id):

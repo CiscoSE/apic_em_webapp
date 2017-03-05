@@ -35,8 +35,8 @@
         <header>
           <div class="inner">
             <h2>Network Programmabilty with Python</h2>
-            <p>Let's break down a network programmability Python example with
-              Cisco APIC-EM into three steps.</p>
+            <p>Let's break down a network programmability example with Python
+              and Cisco APIC-EM into three steps.</p>
           </div>
         </header>
         <!-- Content -->
@@ -75,8 +75,8 @@ def get_token(url):
             <p>We will now take the authentication token and ask the APIC-EM for
               a list of devices. Exploring the API, we find that there are more
               than two dozen different items we could use as filters including;
-              location, type, serial number, location and role. Let's use the
-              "role" to look for devices tagged as "Access".</p>
+              type, serial number, location and role. Let's use the "role"
+              to look for devices tagged as "Access".</p>
             <pre><code>
 def get_device_id(token, url):
     #This function receives the token from the previous function and the URL of the APIC-EM server
@@ -129,8 +129,9 @@ def get_config(token, url, id):
           <p>This has been the absolute basics of network programmability. There
             are many interesting directions we can go once comfortable with the
             fundamentals. Users of Cisco Spark can experiment with a bot written
-            on this same site. It listens for a webhook from Cisco Spark for
-            messages sent to it in rooms with the message "get config". It
+            on this same site. Invite "brbuxton_Get_Config" to a room and say "get
+              config".  It listens for a webhook from Cisco Spark for
+            messages sent to it in rooms with the message "get config" and responds. It
             leverages the same code used in this page to deliver a configuration
             to a Spark room.</p>
           <p>The exciting stuff really begins when you open up to the idea of
@@ -145,7 +146,7 @@ def get_config(token, url, id):
         </div>
       </section>
       <ul class="contact">
-        <li class="fa-linkedin"><a href="#">www.linkedin.com/in/brianbuxton/</a></li>
+        <li class="fa-linkedin"><a href="https://www.linkedin.com/in/brianbuxton/">www.linkedin.com/in/brianbuxton/</a></li>
       </ul>
       <ul class="copyright">
         <li>© Brian Buxton All rights reserved.</li>

@@ -32,9 +32,9 @@ def get_device_id(token, url):
 
     response = requests.get(url, headers=headers, verify=False).json()
 
-    #iterate through response looking for the ACCESS role.
+    #iterate through response looking for the first Managed device.
     for item in response['response']:
-        if item['role'] == 'ACCESS':
+        if item['collectionStatus'] == 'Managed':
             return item['id']
 
 def get_config(token, url, id):

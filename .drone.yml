@@ -13,10 +13,19 @@ build:
 publish:
     docker:
         repo: $$DOCKER_USERNAME/apic_em_webapp
-        tag: dev
+        tag: "dev"
         username: $$DOCKER_USERNAME
         password: $$DOCKER_PASSWORD
         email: $$DOCKER_EMAIL
+
+    docker:
+        repo: $$DOCKER_USERNAME/apic_em_webapp
+        tag: "latest"
+        username: $$DOCKER_USERNAME
+        password: $$DOCKER_PASSWORD
+        email: $$DOCKER_EMAIL
+        when:
+          branch: "master"
 
 
 notify:

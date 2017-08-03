@@ -5,6 +5,7 @@ ENV USER root
 ENV HOME /root
 
 RUN pwd
+RUN ls -la /
 RUN pip install --no-cache-dir setuptools wheel
 RUN pip install --requirement /root/requirements.txt
 

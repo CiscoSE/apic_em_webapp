@@ -1,0 +1,46 @@
+build:
+    build_starting:
+        image: python:3.5.3-slim
+        commands:
+            - echo "Beginning new build"
+    run_tests:
+        image: python:3.5.3-slim
+        commands:
+            - pip install -r requirements.txt
+            - pip install --upgrade pip
+
+
+publish:
+    docker:
+        repo: $$DOCKER_USERNAME/apic_em_webapp
+        tag: "dev"
+        username: $$DOCKER_USERNAME
+        password: $$DOCKER_PASSWORD
+        email: $$DOCKER_EMAIL
+
+    docker:
+        repo: $$DOCKER_USERNAME/apic_em_webapp
+        tag: "latest"
+        username: $$DOCKER_USERNAME
+        password: $$DOCKER_PASSWORD
+        email: $$DOCKER_EMAIL
+        when:
+          branch: "master"
+
+deploy:
+    webhook:
+        image: plugins/drone-webhook
+        skip_verify: true
+        method: POST
+        auth:
+            username: $$MANTL_USERNAME
+            password: $$MANTL_PASSWORD
+        urls:
+            - https://$$MANTL_CONTROL/marathon/v2/apps/$$DOCKER_USERNAME/apic-em-webapp/restart?force=true
+
+
+notify:
+    spark:
+        image: hpreston/drone-spark
+        auth_token: $$SPARK_TOKEN
+        roomId: $$SPARK_ROOM

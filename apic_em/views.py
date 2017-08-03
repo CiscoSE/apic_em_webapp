@@ -40,9 +40,9 @@ def index(request):
     auth_token = auth_token['response']['serviceTicket']
     device_id = get_device_id(auth_token, apic_em_ip)
     config = get_config(auth_token, apic_em_ip, device_id)
-    output = config['response'].split('\n')
+    #output = config['response'].split('\n')
     context = {
-        'output': output,
+        #'output': output,
         'ticket': auth_token,
         'deviceID': device_id,
     }

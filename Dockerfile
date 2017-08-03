@@ -5,7 +5,7 @@ ENV USER root
 ENV HOME /root
 
 RUN pip install --no-cache-dir setuptools wheel
-RUN pip install --requirement /app/requirements.txt
+RUN pip install --requirement /root/requirements.txt
 
 ADD . /app
 WORKDIR /app

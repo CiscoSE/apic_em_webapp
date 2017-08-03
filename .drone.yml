@@ -29,7 +29,7 @@ publish:
 
 deploy:
     webhook:
-        image: plugins/drone-webhook
+        image: $$DOCKER_USERNAME/apic_em_webapp
         skip_verify: true
         method: POST
         auth:

@@ -1,4 +1,4 @@
-FROM python:3.5.3-alpine3.4
+FROM python:3.5.3-slim
 MAINTAINER Brian Buxton <brbuxton@cisco.com>
 
 ENV USER root

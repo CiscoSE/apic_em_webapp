@@ -1,10 +1,10 @@
 build:
     build_starting:
-        image: python:3.5.3-alpine3.4
+        image: python:3.5.3-slim
         commands:
             - echo "Beginning new build"
     run_tests:
-        image: python:3.5.3-alpine3.4
+        image: python:3.5.3-slim
         commands:
             - pip install -r requirements.txt
             - pip install --upgrade pip

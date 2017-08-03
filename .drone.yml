@@ -27,6 +27,17 @@ publish:
         when:
           branch: "master"
 
+deploy:
+    webhook:
+        image: plugins/drone-webhook
+        skip_verify: true
+        method: POST
+        auth:
+            username: $$MANTL_USERNAME
+            password: $$MANTL_PASSWORD
+        urls:
+            - https://$$MANTL_CONTROL/marathon/v2/apps/$$DOCKER_USERNAME/apic-em-webapp/restart?force=true
+
 
 notify:
     spark:

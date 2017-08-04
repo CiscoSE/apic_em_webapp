@@ -10,4 +10,4 @@ WORKDIR /app
 RUN pip install --no-cache-dir setuptools wheel
 RUN pip install -r requirements.txt
 
-CMD ["python", "manage.py", "runserver"]
+ENTRYPOINT ["python manage.py runserver"]

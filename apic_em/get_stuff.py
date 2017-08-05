@@ -53,6 +53,7 @@ def return_dict_example(apic_em_ip):
     auth_token = json.loads(HttpResponse.getvalue(auth_token).decode('utf-8'))
     auth_token = auth_token['response']['serviceTicket']
     device_id = get_device_id(auth_token, apic_em_ip)
-    config = get_config(auth_token, apic_em_ip, device_id)
+    #config = get_config(auth_token, apic_em_ip, device_id)
+    config='No configuration available'
 
     return config

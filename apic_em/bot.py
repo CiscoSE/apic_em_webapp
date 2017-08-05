@@ -24,6 +24,7 @@ from builtins import object
 
 import json
 import requests
+import os
 
 from django.http import HttpResponse, QueryDict, JsonResponse
 
@@ -37,12 +38,13 @@ def webhook_init():
     resource="messages"
     event="created"
     url_suffix="/apic/sparkwebhook/"
-    web_server="http://ec2-54-202-234-244.us-west-2.compute.amazonaws.com"
+    web_server="http://apic-em-webapp.apps.imapex.io"
 
     #grab the at from a local at.txt file instead of global variable
-    fat=open ("apic_em/at.txt","r+")
-    at=fat.readline().rstrip()
-    fat.close
+    #fat=open ("apic_em/at.txt","r+")
+    #at=fat.readline().rstrip()
+    #fat.close
+    at = os.environ['SPARK_AT']
     print (at)
 
     api = CiscoSparkAPI(at)
@@ -68,8 +70,9 @@ def get_config():
     """
     apic_em_ip = "https://sandboxapic.cisco.com/api/v1"
 
-    response = return_dict_example(apic_em_ip)
-    return response['response']
+    #response = return_dict_example(apic_em_ip)
+    #return response['response']
+    return apic_em_ip
 
 def findwebhookidbyname(api, webhookname):
     webhooks = api.webhooks.list()
@@ -80,9 +83,10 @@ def findwebhookidbyname(api, webhookname):
     return "not found"
 
 def webhook(request):
-    fat=open ("apic_em/at.txt","r+")
-    at=fat.readline().rstrip()
-    fat.close
+    #fat=open ("apic_em/at.txt","r+")
+    #at=fat.readline().rstrip()
+    #fat.close
+    at = os.environ['SPARK_AT']
     print (at)
 
     api = CiscoSparkAPI(at)

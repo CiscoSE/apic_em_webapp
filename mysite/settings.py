@@ -25,7 +25,7 @@ SECRET_KEY = 'nhmjm^k2tw9fl1s-95-o^w#-5a@@^5^g^a75)sq(s5u5)51@h8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.31.36.148', 'ec2-54-202-234-244.us-west-2.compute.amazonaws.com', '127.0.0.1']
+ALLOWED_HOSTS = ['apic-em-webapp.apps.imapex.io', '127.0.0.1']
 
 
 # Application definition

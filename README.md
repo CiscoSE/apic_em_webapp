@@ -1,6 +1,6 @@
 # apic_em_webapp
 
-This is a project where I will explore network programmability and other programming concepts with python.
+This is a project is deprecated and no longer under development.  It was where I was exploring network programmability and other programming concepts with python.
 
 Getting Started
 ---------------

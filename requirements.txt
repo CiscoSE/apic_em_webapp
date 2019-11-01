@@ -1,7 +1,7 @@
 ciscosparkapi==0.4.2
 Django==1.10.5
 django-filter==1.0.1
-djangorestframework==3.5.3
+djangorestframework==3.9.1
 future==0.16.0
 requests==2.13.0
 requests-toolbelt==0.8.0
